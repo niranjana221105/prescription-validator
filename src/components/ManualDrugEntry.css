@@ -1,0 +1,219 @@
+.mde-panel {
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  background: white;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  transition: border-color 0.2s;
+}
+
+.mde-panel.mde-open {
+  border-color: #3b82f6;
+}
+
+/* ── Toggle button ── */
+.mde-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+  gap: 0.75rem;
+}
+
+.mde-toggle:hover {
+  background: #f0f7ff;
+}
+
+.mde-panel.mde-open .mde-toggle {
+  background: #eff6ff;
+  border-bottom: 1px solid #bfdbfe;
+}
+
+.mde-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #2563eb;
+}
+
+.mde-toggle-left svg {
+  flex-shrink: 0;
+}
+
+.mde-toggle-title {
+  display: block;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #1e40af;
+}
+
+.mde-toggle-sub {
+  display: block;
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin-top: 0.1rem;
+}
+
+.mde-toggle svg:last-child {
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+/* ── Body ── */
+.mde-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+/* ── Drug row ── */
+.mde-drug-row {
+  background: #f8faff;
+  border: 1px solid #e0eaff;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.mde-drug-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.mde-drug-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #3b82f6;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mde-remove-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ef4444;
+  padding: 0.25rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  transition: background 0.15s;
+}
+
+.mde-remove-btn:hover {
+  background: #fee2e2;
+}
+
+/* ── Fields grid ── */
+.mde-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.625rem;
+}
+
+.mde-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.mde-field-wide {
+  grid-column: 1 / -1;
+}
+
+.mde-field label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.mde-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  font-size: 0.875rem;
+  color: #1f2937;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.mde-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+}
+
+.mde-input-error {
+  border-color: #ef4444;
+}
+
+.mde-error-text {
+  font-size: 0.72rem;
+  color: #ef4444;
+}
+
+/* ── Actions bar ── */
+.mde-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.mde-actions-right {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mde-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 1rem;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+
+.mde-btn-primary {
+  background: #3b82f6;
+  color: white;
+}
+
+.mde-btn-primary:hover {
+  background: #2563eb;
+}
+
+.mde-btn-outline {
+  background: transparent;
+  color: #3b82f6;
+  border: 1.5px solid #3b82f6;
+}
+
+.mde-btn-outline:hover {
+  background: #eff6ff;
+}
+
+.mde-btn-ghost {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.mde-btn-ghost:hover {
+  background: #e5e7eb;
+}
