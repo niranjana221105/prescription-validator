@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: medisafe-backend
+    env: node
+    buildCommand: npm install
+    startCommand: node server/index.js
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PG_HOST
+        fromDatabase:
+          name: medisafe-db
+          property: host
+      - key: PG_PORT
+        fromDatabase:
+          name: medisafe-db
+          property: port
+      - key: PG_DATABASE
+        fromDatabase:
+          name: medisafe-db
+          property: database
+      - key: PG_USER
+        fromDatabase:
+          name: medisafe-db
+          property: user
+      - key: PG_PASSWORD
+        fromDatabase:
+          name: medisafe-db
+          property: password
+
+databases:
+  - name: medisafe-db
+    databaseName: smart_prescription_db
+    user: medisafe_user

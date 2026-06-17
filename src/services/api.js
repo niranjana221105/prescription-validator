@@ -1,6 +1,10 @@
 // Central API service — all backend calls go through here
+// In development: Vite proxy forwards /api → localhost:5000
+// In production:  Uses VITE_API_URL env variable (set on Vercel)
 
-const BASE = '/api';
+const BASE = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : '/api';
 
 // ── Helper ────────────────────────────────────────────────────────────────────
 const getHeaders = () => {
