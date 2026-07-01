@@ -12,7 +12,15 @@ const app  = express();
 const PORT = process.env.PORT || 5000;
 
 // ── Middleware ────────────────────────────────────────────────────────────────
-app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3001'], credentials: true }));
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    /\.vercel\.app$/,
+    /\.github\.io$/
+  ],
+  credentials: true
+}));
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 
@@ -36,27 +44,36 @@ app.get('/api/health', async (req, res) => {
 // ── Global error handler ──────────────────────────────────────────────────────
 app.use((err, req, res, next) => {
   console.error('Server error:', err.message);
-  res.status(err.status || 500).json({ success: false, message: err.message || 'Internal server error' });
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal server error'
+  });
 });
 
-// ── Sync DB then start ────────────────────────────────────────────────────────
-const start = async () => {
+// ── DB sync ───────────────────────────────────────────────────────────────────
+const initDB = async () => {
   try {
     await sequelize.authenticate();
     console.log('✅ PostgreSQL connected');
-    // sync({ alter: true }) updates tables to match models without dropping data
     await sequelize.sync({ alter: true });
     console.log('✅ Tables synced');
   } catch (err) {
-    console.error('❌ PostgreSQL connection failed:', err.message);
-    console.log('⚠️  Starting in offline mode — data will not persist to database');
+    console.error('❌ DB failed:', err.message);
+    console.log('⚠️  Offline mode — data will not persist');
   }
-
-  app.listen(PORT, () => {
-    console.log(`🚀 MediSafe server running on http://localhost:${PORT}`);
-  });
 };
 
-start();
+// Start server (local dev) or export for Vercel serverless
+if (process.env.VERCEL) {
+  // Vercel — init DB once and export app
+  initDB();
+} else {
+  // Local — start server normally
+  initDB().then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 MediSafe server running on http://localhost:${PORT}`);
+    });
+  });
+}
 
 export default app;
