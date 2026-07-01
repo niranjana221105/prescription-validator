@@ -16,11 +16,18 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    chunkSizeWarningLimit: 2000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          charts: ['recharts'],
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('tesseract')) return 'tesseract';
+            if (id.includes('recharts') || id.includes('d3')) return 'charts';
+            if (id.includes('lucide')) return 'icons';
+            if (id.includes('react-router') || id.includes('@remix-run')) return 'router';
+            if (id.includes('react')) return 'react';
+            return 'vendor';
+          }
         }
       }
     }
