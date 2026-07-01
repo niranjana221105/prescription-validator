@@ -45,3 +45,6 @@ public/tesseract/
 *.tgz
 .cache/
 coverage/
+
+# Other projects in same folder
+video portfolio/

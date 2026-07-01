@@ -3,8 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  // Base path for GitHub Pages — change 'prescription-validator' to your repo name
-  base: '/prescription-validator/',
+  base: '/',
   server: {
     port: 3000,
     proxy: {
