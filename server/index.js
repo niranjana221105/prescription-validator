@@ -24,6 +24,33 @@ app.use(cors({
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 
+// ── DB sync ───────────────────────────────────────────────────────────────────
+let dbInitPromise = null;
+const initDB = () => {
+  if (!dbInitPromise) {
+    dbInitPromise = (async () => {
+      try {
+        await sequelize.authenticate();
+        console.log('✅ PostgreSQL connected');
+        await sequelize.sync({ alter: true });
+        console.log('✅ Tables synced');
+      } catch (err) {
+        console.error('❌ DB failed:', err.message);
+        console.log('⚠️  Offline mode — data will not persist');
+      }
+    })();
+  }
+  return dbInitPromise;
+};
+
+// Ensure DB is initialized before API requests
+app.use(async (req, res, next) => {
+  try {
+    await initDB();
+  } catch (_) {}
+  next();
+});
+
 // ── Routes ────────────────────────────────────────────────────────────────────
 app.use('/api/auth',          authRoutes);
 app.use('/api/prescriptions', prescriptionRoutes);
@@ -50,24 +77,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-// ── DB sync ───────────────────────────────────────────────────────────────────
-const initDB = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('✅ PostgreSQL connected');
-    await sequelize.sync({ alter: true });
-    console.log('✅ Tables synced');
-  } catch (err) {
-    console.error('❌ DB failed:', err.message);
-    console.log('⚠️  Offline mode — data will not persist');
-  }
-};
-
 // Start server (local dev) or export for Vercel serverless
-if (process.env.VERCEL) {
-  // Vercel — init DB once and export app
-  initDB();
-} else {
+if (!process.env.VERCEL) {
   // Local — start server normally
   initDB().then(() => {
     app.listen(PORT, () => {
