@@ -1,6 +1,6 @@
 # 💊 MediSafe — Smart Prescription Validator
 
-An AI-driven **full stack** web application that scans doctor prescriptions using OCR, detects dangerous drug interactions and dosage anomalies, and generates real-time safety alerts — with special focus on paediatric safety.
+An AI-driven **full stack** web application that scans doctor prescriptions using OCR, detects dangerous drug interactions , helps patients to analyze the presciption and dosage anomalies, and generates real-time safety alerts — with special focus on paediatric safety.
 
 ---
 
